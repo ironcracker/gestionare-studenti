@@ -1,10 +1,21 @@
-
 import { useState } from 'react'
 import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material'
 import Students from './components/Students'
 
+const pages = [
+  { value: 0, label: 'Home' },
+  { value: 1, label: 'Students' },
+  { value: 2, label: 'Courses' },
+]
+0
+
 function App() {
-  const [activeSection, setActiveSection] = useState('Home')
+  const [activePage, setActivePage] = useState(pages[0].value)
+  const pageChildren = [
+    <Typography key={pages[0].value} variant="h4" component="h1">Home</Typography>,
+    <Students key={pages[1].value} />,
+    <Typography key={pages[2].value} variant="h4" component="h1">Courses</Typography>,
+  ]
 
   return (
     <>
@@ -14,31 +25,25 @@ function App() {
             Student Manager
           </Typography>
           <Box component="nav" aria-label="Main navigation" sx={{ display: 'flex', gap: 1 }}>
-            {['Home', 'Students', 'Courses'].map((section) => (
+            {pages.map(({value, label }) => (
               <Button
-                key={section}
+                key={value}
                 color="inherit"
-                onClick={() => setActiveSection(section)}
-                aria-current={activeSection === section ? 'page' : undefined}
+                onClick={() => setActivePage(value)}
+                aria-current={activePage === value ? 'page' : undefined}
                 sx={{
                   color: 'common.white',
-                  bgcolor: activeSection === section ? 'rgba(255, 255, 255, 0.16)' : 'transparent',
+                  bgcolor: activePage === value  ? 'rgba(255, 255, 255, 0.16)' : 'transparent',
                 }}
               >
-                {section}
+                {label}
               </Button>
             ))}
           </Box>
         </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="lg" sx={{ py: 4 }}>
-        {activeSection === 'Students' ? (
-          <Students />
-        ) : (
-          <Typography variant="h4" component="h1">
-            {activeSection}
-          </Typography>
-        )}
+        {pageChildren[activePage]}
       </Container>
     </>
   )
