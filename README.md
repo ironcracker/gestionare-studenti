@@ -145,8 +145,8 @@ erDiagram
   1. Clonează repository-ul:
   ```bash
 
-    git clone https://github.com/utilizator/student-management-system.git
-    cd student-management-system
+    git clone https://github.com/ironcracker/gestionare-studenti.git
+    cd gestionare-studenti
   ```
 
   2. Creează baza de date:
@@ -168,7 +168,7 @@ erDiagram
     npm install
     npm start
   ```
-  6. Accesează aplicația la http://localhost:5173.
+  6. Accesează aplicația la http://localhost:5173/gestionare-studenti/.
 
 ## Posibile extinderi
 
