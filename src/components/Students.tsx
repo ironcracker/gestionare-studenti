@@ -64,7 +64,7 @@ function Students() {
 
 		async function loadStudents() {
 			try {
-				const response = await fetch('../src/data/studenti.json', { signal: controller.signal })
+				const response = await fetch('./studenti.json', { signal: controller.signal })
 				if (!response.ok) {
 					throw new Error('Student data could not be loaded.')
 				}
