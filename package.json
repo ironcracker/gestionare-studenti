@@ -1,7 +1,7 @@
 {
   "name": "gestionare-studenti",
   "version": "0.0.0",
-  "homepage":"https://ironcracker.github.com/gestionare-studenti",
+  "homepage":"https://ironcracker.github.io/gestionare-studenti",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
