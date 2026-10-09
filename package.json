@@ -17,6 +17,7 @@
     "@mui/joy": "5.0.0-beta.52",
     "@mui/material": "^7.3.11",
     "@mui/x-data-grid": "^9.15.0",
+    "gh-pages": "^6.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "styled-components": "^6.5.3"
