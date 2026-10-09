@@ -1,20 +1,26 @@
 import { useState } from 'react'
 import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material'
 import Students from './components/Students'
+import Courses from './components/courses'
+import Home from './components/Home'
 
 const pages = [
   { value: 0, label: 'Home' },
-  { value: 1, label: 'Students' },
-  { value: 2, label: 'Courses' },
+  { value: 1, label: 'Studenti' },
+  { value: 2, label: 'Cursuri' },
 ]
 0
 
 function App() {
   const [activePage, setActivePage] = useState(pages[0].value)
   const pageChildren = [
-    <Typography key={pages[0].value} variant="h4" component="h1">Home</Typography>,
+    <Home
+      key={pages[0].value}
+      onOpenStudents={() => setActivePage(pages[1].value)}
+      onOpenCourses={() => setActivePage(pages[2].value)}
+    />,
     <Students key={pages[1].value} />,
-    <Typography key={pages[2].value} variant="h4" component="h1">Courses</Typography>,
+    <Courses key={pages[2].value} />,
   ]
 
   return (
@@ -22,7 +28,7 @@ function App() {
       <AppBar position="static" elevation={0} sx={{ width: '100%', bgcolor: '#1976d2' }}>
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 4 } }}>
           <Typography variant="h6" component="div" sx={{ color: 'common.white', fontWeight: 700 }}>
-            Student Manager
+           Manager de Studenți
           </Typography>
           <Box component="nav" aria-label="Main navigation" sx={{ display: 'flex', gap: 1 }}>
             {pages.map(({value, label }) => (
