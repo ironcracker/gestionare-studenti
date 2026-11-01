@@ -170,6 +170,12 @@ erDiagram
   ```
   6. Accesează aplicația la http://localhost:5173/gestionare-studenti/.
 
+### Configurare API
+
+În dezvoltare, cererile către `/api` sunt redirecționate de Vite către API-ul local de la `http://localhost:5268`, evitând cererile cross-origin din browser.
+
+Pentru producție, setează `VITE_API_BASE_URL` la URL-ul API-ului înainte de build, de exemplu `https://api.example.com/api`. Serverul API trebuie să permită originea site-ului frontend prin configurarea CORS; această configurație nu se poate face din aplicația React.
+
 ## Posibile extinderi
 
   - Adăugarea de câmpuri suplimentare în students: date_of_birth, phone, address

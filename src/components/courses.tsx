@@ -16,7 +16,8 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material'
-import { courseStorageKey, getStoredCourses, type Course } from '../data/courses'
+import { getCourses } from '../data/api'
+import type { Course } from '../data/courses'
 
 interface CourseDraft {
 	course_code: string
@@ -27,17 +28,33 @@ interface CourseDraft {
 const pageSize = 20
 
 function Courses() {
-	const [courses, setCourses] = useState<Course[]>(getStoredCourses)
+	const [courses, setCourses] = useState<Course[]>([])
 	const [search, setSearch] = useState('')
 	const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({ page: 0, pageSize })
 	const [dialogOpen, setDialogOpen] = useState(false)
 	const [editingCourse, setEditingCourse] = useState<Course | null>(null)
 	const [draft, setDraft] = useState<CourseDraft>({ course_code: '', course_name: '', credits: '3' })
 	const [error, setError] = useState('')
+	const [loading, setLoading] = useState(true)
+	const [loadError, setLoadError] = useState('')
+	const credits = Number(draft.credits)
+	const hasInvalidCredits = draft.credits !== '' && (!Number.isInteger(credits) || credits <= 1)
 
 	useEffect(() => {
-		localStorage.setItem(courseStorageKey, JSON.stringify(courses))
-	}, [courses])
+		const controller = new AbortController()
+
+		getCourses(controller.signal)
+			.then(setCourses)
+			.catch((loadError: unknown) => {
+				if (loadError instanceof DOMException && loadError.name === 'AbortError') return
+				setLoadError('Unable to load courses. Please try again later.')
+			})
+			.finally(() => {
+				if (!controller.signal.aborted) setLoading(false)
+			})
+
+		return () => controller.abort()
+	}, [])
 
 	const normalizedSearch = search.trim().toLowerCase()
 	const filteredCourses = courses.filter((course) =>
@@ -128,6 +145,7 @@ function Courses() {
 			<Typography id="courses-heading" variant="h4" component="h1" sx={{ mb: 3 }}>
 				Cursuri
 			</Typography>
+			{loadError && <Alert severity="error" sx={{ mb: 2 }}>{loadError}</Alert>}
 			<Box
 				role="toolbar"
 				aria-label="Course actions"
@@ -160,6 +178,7 @@ function Courses() {
 				autoHeight
 				rows={filteredCourses}
 				columns={columns}
+				loading={loading}
 				pagination
 				paginationModel={paginationModel}
 				onPaginationModelChange={setPaginationModel}
@@ -193,6 +212,8 @@ function Courses() {
 							value={draft.credits}
 							onChange={(event) => setDraft((current) => ({ ...current, credits: event.target.value }))}
 							inputProps={{ min: 1, step: 1 }}
+							error={hasInvalidCredits}
+							helperText={hasInvalidCredits ? 'Credits must be greater than 0.' : undefined}
 							required
 						/>
 					</DialogContent>

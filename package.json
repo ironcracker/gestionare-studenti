@@ -1,7 +1,7 @@
 {
   "name": "gestionare-studenti",
   "version": "0.0.0",
-  "homepage":"https://ironcracker.github.io/gestionare-studenti",
+  "homepage": "https://ironcracker.github.io/gestionare-studenti",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -19,6 +19,8 @@
     "@mui/joy": "5.0.0-beta.52",
     "@mui/material": "^7.3.11",
     "@mui/x-data-grid": "^9.15.0",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
     "gh-pages": "^6.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
